@@ -1,6 +1,6 @@
 from telegram.ext import BaseFilter
 from telegram import Message
-from bot import AUTHORIZED_CHATS, OWNER_ID, download_dict, download_dict_lock
+from bot import AUTHORIZED_CHATS, OWNER_ID, CANCEL_IDS, download_dict, download_dict_lock
 
 
 class CustomFilters:
@@ -26,7 +26,7 @@ class CustomFilters:
     class _MirrorOwner(BaseFilter):
         def filter(self, message: Message):
             user_id = message.from_user.id
-            if user_id == OWNER_ID:
+            if user_id in CANCEL_IDS:
                 return True
             args = str(message.text).split(' ')
             if len(args) > 1:
